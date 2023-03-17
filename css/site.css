@@ -1,0 +1,167 @@
+body{
+    background: #edf1f5;
+    margin-top:20px;
+}
+#todo-col, #in-progress-col, #done-col {
+    border: dotted;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: dotted lightgray;
+}
+.card {
+    margin-bottom: 30px;
+}
+
+.card-header {
+	text-align: end;
+}
+
+a {
+	cursor: pointer;
+}
+
+.fa-arrow-left:hover, .fa-arrow-right:hover {
+	cursor: pointer;
+	background-color: #2cabe3;
+}
+
+.fa-flag:hover {
+	cursor: pointer;
+	background-color: #ff5050;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.57rem;
+}
+
+ .task-has-grid .nav-link {
+     padding: .5rem
+ }
+
+ .task-has-grid .single-task-item .card {
+     border-radius: 10px
+ }
+
+ .task-has-grid .single-task-item .favourite-note {
+     cursor: pointer
+ }
+
+ .task-has-grid .single-task-item .side-stick {
+     position: absolute;
+     width: 3px;
+     height: 35px;
+     left: 0;
+     background-color: rgba(82, 95, 127, .5)
+ }
+
+ .task-has-grid .single-task-item .category-dropdown.dropdown-toggle:after {
+     display: none
+ }
+
+ .task-has-grid .single-task-item .category [class*=category-] {
+     height: 15px;
+     width: 15px;
+     display: none
+ }
+
+ .task-has-grid .single-task-item .category [class*=category-]::after {
+     content: "\f0d7";
+     font: normal normal normal 14px/1 FontAwesome;
+     font-size: 12px;
+     color: #fff;
+     position: absolute
+ }
+
+ .task-has-grid .single-task-item .category .category-business {
+     background-color: rgba(44, 208, 126, .5);
+     border: 2px solid #2cd07e
+ }
+
+ .task-has-grid .single-task-item .category .category-social {
+     background-color: rgba(44, 171, 227, .5);
+     border: 2px solid #2cabe3
+ }
+
+ .task-has-grid .single-task-item .category .category-important {
+     background-color: rgba(255, 80, 80, .5);
+     border: 2px solid #ff5050
+ }
+
+ .task-has-grid .single-task-item.all-category .point {
+     color: rgba(82, 95, 127, .5)
+ }
+
+ .task-has-grid .single-task-item.task-business .point {
+     color: rgba(44, 208, 126, .5)
+ }
+
+ .task-has-grid .single-task-item.task-business .side-stick {
+     background-color: rgba(44, 208, 126, .5)
+ }
+
+ .task-has-grid .single-task-item.task-business .category .category-business {
+     display: inline-block
+ }
+
+ .task-has-grid .single-task-item.task-favourite .favourite-note {
+     color: #ffc107
+ }
+
+ .task-has-grid .single-task-item.task-social .point {
+     color: rgba(44, 171, 227, .5)
+ }
+
+ .task-has-grid .single-task-item.task-social .side-stick {
+     background-color: rgba(44, 171, 227, .5)
+ }
+
+ .task-has-grid .single-task-item.task-social .category .category-social {
+     display: inline-block
+ }
+
+ .task-has-grid .single-task-item.task-important .point {
+     color: rgba(255, 80, 80, .5)
+ }
+
+ .task-has-grid .single-task-item.task-important .side-stick {
+     background-color: rgba(255, 80, 80, .5)
+ }
+
+ .task-has-grid .single-task-item.task-important .category .category-important {
+     display: inline-block
+ }
+
+ .task-has-grid .single-task-item.all-category .more-options,
+ .task-has-grid .single-task-item.all-category.task-favourite .more-options {
+     display: block
+ }
+
+ .task-has-grid .single-task-item.all-category.task-business .more-options,
+ .task-has-grid .single-task-item.all-category.task-favourite.task-business .more-options,
+ .task-has-grid .single-task-item.all-category.task-favourite.task-important .more-options,
+ .task-has-grid .single-task-item.all-category.task-favourite.task-social .more-options,
+ .task-has-grid .single-task-item.all-category.task-important .more-options,
+ .task-has-grid .single-task-item.all-category.task-social .more-options {
+     display: none
+ }
+
+ @media (max-width:767.98px) {
+     .task-has-grid .single-task-item {
+         max-width: 100%
+     }
+ }
+
+ @media (max-width:991.98px) {
+     .task-has-grid .single-task-item {
+         max-width: 216px
+     }
+ }
