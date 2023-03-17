@@ -12,37 +12,57 @@ function get(key) {
 
 function findTaskIndexByTaskId(taskId) {
     console.log(`looking for taskId ${taskId}`);
-    let index = tasks.findIndex(task => task.id === taskId);
+    let index = tasks.findIndex(task => task.id == taskId);
     console.log(`found at index ${index}`);
-    console.log(`TEST: ${taskId} == ${tasks[index]['id']}`);
     return index
 }
 
 function saveTask() {
     // get form fields
     let newTask = getFormFields();
-    console.log(`Adding task ${newTask}`);
-    tasks.push(newTask);
-    persist('tasks', tasks);
+    
+    // validate the task
+    let errors = validateTask(newTask);
+    console.log(errors)
+    if (errors.length > 0) {
+        // display error messages
+        $('#modal-error-box').empty();
+        let errorHtml = errors.reduce((prev, curr) => prev + `<li>${curr}</li>`, '');
+        
+        $('#modal-error-box').append(`<ul>${errorHtml}</ul>`);
+    }
+    else {
+        // does this task already exist?
+        let index = findTaskIndexByTaskId(newTask.id);
+        if (index === -1) {
+            console.log('adding new task')
+            tasks.push(newTask);
+        } else {
+            console.log('updating task')
+            tasks[index] = newTask;
+        }
+        
+        // validate form fields
+        $('#tasksModal').modal('hide');
 
-    // validate form fields
-    $('#tasksModal').modal('hide');
+        // persist the change
+        persist('tasks', tasks);
 
-    // TODO add validation to reduce duplicate task names
-
-    initializeBoard();
+        initializeBoard();
+    }
 }
 
 function getFormFields() {
     let priorityValue = ($('#low-priority').is(':checked') ? 'LOW' : $('#med-priority').is(':checked') ? 'MED': 'HIGH');
     let dateArray = $('#task-has-due-date').val().split('-');
-    console.log(`input: ${$('#task-has-due-date').val()} -> ${dateArray}`)
+    console.log($('#has-task-id').val() || generateTaskId());
+    console.log(dateArray);
 
     let temp = {
-        id: generateTaskId(),
+        id: $('#has-task-id').val() || generateTaskId(),
         title: $('#task-has-title').val(),
         epic: $('#task-has-epic').val(),
-        dueDate: new Date(),
+        dueDate: new Date(`${dateArray[0]}-${dateArray[1]}-${dateArray[2]}`),
         priority: priorityValue,
         description: $('#task-has-description').val(),
         isBlocked: false,
@@ -111,14 +131,44 @@ function compareTasks(a, b) {
     else if (new Date(a.dueDate).getTime() > new Date(b.dueDate).getTime()) { result = 1; }
     else if (new Date(a.dueDate).getTime() < new Date(b.dueDate).getTime()) {result = -1; }
 
-    console.log(`comparing: ${a.priority} / ${a.dueDate} to ${b.priority} / ${b.dueDate} -> ${result}`)
+    // console.log(`comparing: ${a.priority} / ${a.dueDate} to ${b.priority} / ${b.dueDate} -> ${result}`)
     return result;
+}
+
+function validateTask(task) {
+    let errors = []
+    // is there a title?
+    if (!task.title) { errors.push('Title is a required field'); }
+
+    // is there a description?
+    if (!task.description) { errors.push('Description is a required field'); }
+
+    // is title unique?
+    if (task.title && tasks.filter(t => t.title === task.title).length > 0) { errors.push('Title must be unique'); }
+
+    return errors;
 }
 
 function toggleModal(taskId) {
     $('#tasksModal').modal('toggle');
     if (taskId) {
-        
+        // get task
+        let task = tasks[findTaskIndexByTaskId(taskId)];
+        if (task) {
+            // get date and format it
+            let taskDate = new Date(task?.dueDate);
+            let formattedDate = `${taskDate.getFullYear()}-${('0'+(taskDate.getMonth()+1)).slice(-2)}-${('0'+taskDate.getDate()).slice(-2)}`;
+            
+            // pre-fill modal fields with task data
+            $('#has-task-id').val(task.id);
+            $('#task-has-title').val(task.title);
+            $('#low-priority').val(task.priority === PRIORITIES[0]);
+            $('#med-priority').val(task.priority === PRIORITIES[1]);
+            $('#high-priority').val(task.priority === PRIORITIES[2]);
+            $('#task-has-due-date').val(formattedDate);
+            $('#task-has-epic').val(task.epic);
+            $('#task-has-description').val(task.description);
+        }
     }
 }
 

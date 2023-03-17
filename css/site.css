@@ -154,6 +154,11 @@ a {
      display: none
  }
 
+ .errors {
+	 color: red;
+	 font: italic bold;
+ }
+
  @media (max-width:767.98px) {
      .task-has-grid .single-task-item {
          max-width: 100%
